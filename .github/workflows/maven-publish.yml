@@ -1,5 +1,10 @@
 name: Maven Package
 
+env:
+  BASE_NAME: Peaksis1
+  DEPLOY_REPO: Kubernetes-Helm-AgroCD-Devops
+  HELM_PATH: todolist
+
 on:
   push:
     branches: [main]
@@ -45,17 +50,17 @@ jobs:
     steps:
       - name: Clone deployment repo
         run: |
-          git clone https://${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/Peaksis1/Kubernetes-Helm-AgroCD-Devops.git
-          cd Kubernetes-Helm-AgroCD-Devops
+          git clone https://${{ secrets.DEPLOY_REPO_TOKEN }}@github.com/${{env.BASE_NAME}}/${{env.DEPLOY_REPO}}.git
+          cd ${{env.DEPLOY_REPO}}
 
       - name: Update Helm values.yaml
         run: |
-          cd YOUR_DEPLOY_REPO/helm-chart
+          cd ${{env.DEPLOY_REPO}}/${{env.HELM_PATH}}
           sed -i "s/tag:.*/tag: ${{ needs.build.outputs.image_tag }}/" values.yaml
 
       - name: Commit and push changes
         run: |
-          cd YOUR_DEPLOY_REPO
+          cd ${{env.DEPLOY_REPO}}
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add .
