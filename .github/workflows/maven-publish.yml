@@ -20,6 +20,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Maven
+      working-directory: todolist
       run: mvn clean package -DskipTests
 
     - name: Login to Docker Hub
