@@ -10,12 +10,16 @@ Now github actions
 
 Repo -> Settings -> Secrets n vars -> actions
 
+Generate access token on docker hub
+
 
 name: Maven Package
 
 on:
   push:
-    branches: : [main]
+    branches: [main]
+    paths:
+      - todolist/**
 
 jobs:
   build:
@@ -31,13 +35,16 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Maven
+      working-directory: todolist
       run: mvn clean package -DskipTests
 
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker Image
+      working-directory: todolist
       run: docker build -t ${{ secrets.DOCKER_USERNAME }}/todolist:${{ github.sha }} .
 
     - name: Push Docker Image
+      working-directory: todolist
       run: docker push ${{ secrets.DOCKER_USERNAME }}/todolist:${{ github.sha }}
