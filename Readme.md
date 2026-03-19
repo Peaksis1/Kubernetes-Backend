@@ -76,3 +76,17 @@ jobs:
           git add .
           git commit -m "Update image tag to ${{ needs.build.outputs.image_tag }}"
           git push
+
+
+
+NOW AGROCD
+
+In other repo
+
+
+
+NOTE:
+
+Need to run
+1. Docker desktop
+2. Minikube
