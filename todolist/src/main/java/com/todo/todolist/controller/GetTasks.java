@@ -13,7 +13,7 @@ public class GetTasks {
 
     @GetMapping("")
     public List<String> getAllTasks() {
-        return Arrays.asList("Task 1", "Task 2", "Task 3 test 3.1");
+        return Arrays.asList("Task 1", "Task 2", "Task 3 test 3.2");
     }
 
 }
